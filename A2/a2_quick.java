@@ -11,7 +11,7 @@ public class a2_quick {
       >> Don't forget to switch back to the other version (which
          reads from stdin) before you submit your program to the
          www.cs.auckland.ac.nz/automated-marker <<<
-    
+
    private static int get_unsorted() {
       File inf = new File("a2_in.txt");
       int n = 0;
@@ -23,7 +23,7 @@ public class a2_quick {
          for (int j = 0; j != n; j += 1)  // Read the integers into unsorted
             unsorted[j] = scanner.nextInt();
       } catch (FileNotFoundException e) {
-	 System.out.printf("Couldn't find file a2_in.txt\n");    
+	 System.out.printf("Couldn't find file a2_in.txt\n");
       }
       return n;
     } */
@@ -96,7 +96,7 @@ public class a2_quick {
      	    lx += 1;  rx -= 1;
 	 }
       }
-      
+
       if (left < lx-1)
       	  quicksort(a, left, lx-1, which);
       if (right > lx)
@@ -116,7 +116,15 @@ public class a2_quick {
    }
 
    private static int p_index2(int left, int right) {
-      return left+(right-left)/200;
+      return left+(right-left)/2;
+   }
+
+   private static int p_index2(int[] a, int left, int right) {
+      int mid = left+(right-left)/2;
+      int p = (a[left] <= a[right])
+          ? ((a[right] <= a[mid]) ? right : ((a[left] < a[mid]) ? mid : left))
+          : ((a[left] <= a[mid]) ? left : ((a[left] < a[mid]) ? mid : right));
+      return p;
    }
 
    public static void quickSort(int[] a, int which) {
@@ -135,14 +143,16 @@ public class a2_quick {
 
       get_values(a, n);
       start = System.nanoTime();
-      quickSort(a, 1);
+      // quickSort(a, 1);
+      quicksort(a, 0, n-1, 1);
       TimeInSec_q1 = (System.nanoTime()-start) * 1.0e-9;
 
       get_values(a, n);
       start = System.nanoTime();
-      quickSort(a, 2);
+      // quickSort(a, 2);
+      quicksort(a, 0, n-1, 2);
       TimeInSec_q2 = (System.nanoTime()-start) * 1.0e-9;
-      
+
       speedup = String.format("%.1f", TimeInSec_q1/TimeInSec_q2);
       System.out.printf("%8d   %9.6f   %9.6f  %9.6f     %s\n", n,
       TimeInSec_h, TimeInSec_q1, TimeInSec_q2, speedup);  /* */
@@ -164,5 +174,9 @@ public class a2_quick {
       for (int x = 0; x != nv.length; x += 1) {
          test_algorithms(a, nv[x]);
       }
+      // heapSort(unsorted);
+      // for (int i = unsorted.length - 20; i < unsorted.length; ++i)
+      //     System.out.print(" " + unsorted[i]);
+      // System.out.println();
    }
 }
