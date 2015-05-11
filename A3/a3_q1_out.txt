@@ -1,0 +1,13 @@
+100 lines
+Entries in the SimpleHTs:
+ht  0 =     5 entries
+ht  1 =     4 entries
+ht  2 =     2 entries
+ht  3 =     1 entries
+ht  4 =     3 entries
+ht  5 =     8 entries
+ht  6 =     7 entries
+ht  7 =     7 entries
+Total of 37 entries
+max ht size = 8, min ht size = 1
+difference between max and min = 7
