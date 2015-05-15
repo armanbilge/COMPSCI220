@@ -63,10 +63,24 @@ public class a3_q1 {
 
        public String find(String key) {
        int p = place(key);
-       return "";  // Complete this line
+       return ha[p].ht.get(key);  // Complete this line
        }
 
        public void statistics() {  // Add a body for this function
+           System.out.println("Entries in the SimpleHTs:");
+           int total = 0;
+           int max = Integer.MIN_VALUE;
+           int min = Integer.MAX_VALUE;
+           for (int i = 0; i < nn; ++i) {
+               int size = ha[i].size();
+               total += size;
+               max = Math.max(size, max);
+               min = Math.min(size, min);
+               System.out.format("ht %2d = %5d entries%n", i, size);
+           }
+           System.out.format("Total of %d entries%n", total);
+           System.out.format("max ht size = %d, min ht size = %d%n", max, min);
+           System.out.format("difference between max and min = %d%n", max - min);
        }
    }
 
@@ -84,7 +98,7 @@ public class a3_q1 {
             dht.update(fqdn, src);  // fqdn is DHT key
          }
       } catch (NoSuchElementException e) {
-	  System.out.printf("%d lines\n", nl);    
+	  System.out.printf("%d lines\n", nl);
       } finally {
          scanner.close();
       }
