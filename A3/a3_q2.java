@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class a3_p2 {
+public class a3_q2 {
    public static class N_simpleHT {
       public Hashtable<String, String> ht;
       public Integer m_count;
@@ -49,25 +49,42 @@ public class a3_p2 {
          ha[w] = null;
       }
 
-      public int place(String key) {
+      public int[] place(String key) {
 	 char[] ca = key.toCharArray();
 	 int val = 0, klen = key.length();
 	 for (int j = 0; j != klen; j += 1) val += (int)ca[j];
-	 return val % nn;  // Index of table to use
+	 return new int[] {(val-1) % nn, val % nn, (val+1) % nn};  // Indices of tables to use
       }
 
       public void update(String key, String value) {
-	 int p = place(key);
-	 ha[p].lookup(key, value);
+	 int[] ps = place(key);
+         for (int p : ps)
+	     ha[p].lookup(key, value);
       }
 
-      public String find(String key) {
-	 int p = place(key);
-	 return "";  // Complete this line
-	 }
+       public String find(String key) {
+       int[] ps = place(key);
+       int i;
+       for (i = 0; ha[ps[i]] == null; ++i);
+       return ha[ps[i]].ht.get(key);  // Complete this line
+       }
 
-      public void statistics() {
-	 }
+       public void statistics() {  // Add a body for this function
+           System.out.println("Entries in the SimpleHTs:");
+           int total = 0;
+           int max = Integer.MIN_VALUE;
+           int min = Integer.MAX_VALUE;
+           for (int i = 0; i < nn; ++i) {
+               int size = ha[i].size();
+               total += size;
+               max = Math.max(size, max);
+               min = Math.min(size, min);
+               System.out.format("ht %2d = %5d entries%n", i, size);
+           }
+           System.out.format("Total of %d entries%n", total);
+           System.out.format("max ht size = %d, min ht size = %d%n", max, min);
+           System.out.format("difference between max and min = %d%n", max - min);
+       }
    }
 
 
@@ -86,13 +103,16 @@ public class a3_p2 {
 	    keys.add(fqdn);
          }
       } catch (NoSuchElementException e) {
-	  System.out.printf("%d lines\n", nl);    
+	  System.out.printf("%d lines\n", nl);
       } finally {
          scanner.close();
       }
       dht.statistics();
 
       // Code to make tables 6 and 7 unavailable goes here
+      dht.loose_ht(6);
+      dht.loose_ht(7);
+
       for (int n = 0; n != nl; n += 1) {
 	 System.out.printf("  %d", n);
 	 fqdn = keys.get(n);
