@@ -11,7 +11,7 @@ file 'list.txt' => ['matrix2list.py', 'matrix.txt'] do
   sh 'python3 matrix2list.py'
 end
 
-file 'reverselist.txt' => ['matrix2reverse.py', 'matrix.txt'] do
+file 'reverselist.txt' => ['list2reverse.py', 'list.txt'] do
   sh 'python3 matrix2reverse.py'
 end
 
