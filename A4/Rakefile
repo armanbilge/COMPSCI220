@@ -1,0 +1,20 @@
+require 'rake/clean'
+
+CLEAN.include '*.txt'
+CLEAN.exclude 'matrix.txt'
+
+file 'list.txt' => ['matrix2list.py', 'matrix.txt'] do
+  sh 'python3 matrix2list.py'
+end
+
+file 'reverselist.txt' => ['matrix2reverse.py', 'matrix.txt'] do
+  sh 'python3 matrix2reverse.py'
+end
+
+file 'dfs.txt' => ['dfs.py', 'list.txt'] do
+  sh 'python3 dfs.py'
+end
+
+file 'components.txt' => ['findcomponents.py', 'dfs.txt', 'reverselist.txt'] do
+  sh 'python3 findcomponents.py'
+end

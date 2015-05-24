@@ -1,2 +1,2 @@
-list.txt
-reverselist.txt
+*.txt
+!matrix.txt
