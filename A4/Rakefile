@@ -2,6 +2,10 @@ require 'rake/clean'
 
 CLEAN.include '*.txt'
 CLEAN.exclude 'matrix.txt'
+CLEAN.exclude 'newstreets.txt'
+CLOBBER.include 'newstreets.txt'
+
+task :default => 'newstreets.txt'
 
 file 'list.txt' => ['matrix2list.py', 'matrix.txt'] do
   sh 'python3 matrix2list.py'
@@ -17,4 +21,8 @@ end
 
 file 'components.txt' => ['findcomponents.py', 'dfs.txt', 'reverselist.txt'] do
   sh 'python3 findcomponents.py'
+end
+
+file 'newstreets.txt' => ['findstreets.py', 'list.txt', 'components.txt'] do
+  sh 'python3 findstreets.py'
 end
